@@ -7,20 +7,11 @@ pearls = {'Brown Sugar': 2, 'Plain': 2, 'Strawbery': 2, 'Mango': 2}
 extras = {'Grass Jelly': 2, 'Coffee Jelly': 2, 'Lychee Jelly': 2, 'Peach Jelly': 2}
 sugar = {'1 Teaspoon': 0, '2 Teaspoons': 0, '3 Teaspoons': 0, '4 Teaspoons': 0}
 ice = {'No Ice': 0, 'Moderate Ice': 0, 'Extra Ice': 0}
-drink_parts = [list(drinks.keys()), list(pearls.keys()), list(extras.keys()), list(sugar.keys()), list(ice.keys())]
-drink_part_names = ['drink', 'pearls', 'extras', 'sugar amount', 'ice amount']
+drink_parts = {'drink': list(drinks.keys()), 'pearls': list(pearls.keys()), 'extras': list(extras.keys()), 'sugar amount':list(sugar.keys()), 'ice amount': list(ice.keys())}
 
 def display_options(options):
     for i in range(len(options)):
         print(f'{i + 1}. {options[i]}')
-
-def exit(user_input):
-    if user_input == 'x':
-        quit()
-
-print('Order System')
-
-"${:,.2f}".format(2.5)
 
 # Add back button
 
@@ -74,7 +65,10 @@ def select_option(options):
             valid = True
             return int(choice) - 1
 
-
 def create_drink(parts):
     for part in parts:
-        select_option(part)
+        print(f'Select {part}')
+        option = parts[part][select_option(parts[part])]
+        print(option)
+
+create_drink(drink_parts)
