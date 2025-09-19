@@ -2,12 +2,13 @@
 # File logging with time and order status
 # Cancelled, success, etc.
 
-drinks = {'Taro': 4, 'Peach': 4, 'Brown Sugar': 4, 'Coffee': 4, 'Lychee': 4, 'White Tea': 4, 'Black Tea': 4, 'Coconut': 4, 'Guava': 4, 'Almond': 4, 'Caramel': 4}
-pearls = {'Brown Sugar': 2, 'Plain': 2, 'Strawbery': 2, 'Mango': 2, 'None': 0}
-extras = {'Grass Jelly': 2, 'Coffee Jelly': 2, 'Lychee Jelly': 2, 'Peach Jelly': 2, 'None': 0}
+drinks = {'Taro': 4.49, 'Peach': 4.99, 'Brown Sugar': 2.99, 'Coffee': 3.99, 'Lychee': 4.49, 'White Tea': 3.49, 'Black Tea': 3.49, 'Coconut': 3.99, 'Guava': 4.99, 'Almond': 3.99, 'Caramel': 3.99}
+pearls = {'Brown Sugar': 1.99, 'Plain': 1.49, 'Strawbery': 2.49, 'Mango': 2.49, 'None': 0}
+extras = {'Grass Jelly': 0.99, 'Coffee Jelly': 0.99, 'Lychee Jelly': 1.49, 'Peach Jelly': 1.49, 'None': 0}
 sugar = {'1 Teaspoon': 0, '2 Teaspoons': 0, '3 Teaspoons': 0, '4 Teaspoons': 0}
 ice = {'No Ice': 0, 'Moderate Ice': 0, 'Extra Ice': 0}
-drink_parts = {'drink': list(drinks.keys()), 'pearls': list(pearls.keys()), 'extras': list(extras.keys()), 'sugar amount':list(sugar.keys()), 'ice amount': list(ice.keys())}
+drink_parts_options = {'drink': list(drinks.keys()), 'pearls': list(pearls.keys()), 'extras': list(extras.keys()), 'sugar amount':list(sugar.keys()), 'ice amount': list(ice.keys())}
+drink_parts_prices = [drinks, pearls, extras, sugar, ice]
 
 def display_options(options):
     for i in range(len(options)):
@@ -23,7 +24,7 @@ def select_option(options):
         if choice == 'x':
             return choice
         elif choice not in valid_options:
-            print('Invalid option')
+            print('Invalid option\n')
         else:
             valid = True
             return int(choice) - 1
@@ -33,23 +34,27 @@ def create_drink(parts):
     for part in parts:
         print(f'Select {part}')
         option = select_option(parts[part])
+        print()
         if option == 'x':
             return False
         else:
             option = parts[part][option]
-            print()
             drink.append(option)
     return drink
 
 running = True
 while running:
+    print('Main Screen')
+    print('-----------')
     print('What would you like to do?')
-    print('enter x at anytime to go back or exit')
+    print('Enter x at anytime to cancel or exit.')
     action = select_option(['create new order'])
     print()
     if action == 'x':
         running = False
     else:
+        print('Order Screen')
+        print('------------')
         order = {'drinks': []}
         print('Enter customer name: ')
         order['name'] = input()
@@ -59,10 +64,28 @@ while running:
             print('What would you like to do?')
             action = select_option(['create new drink', 'finish order'])
             print()
-            if action == 0:
-                drink = create_drink(drink_parts)
-                if drink:
-                    order['drinks'].append(drink)
-            elif action == 1:
-                print(order)
+            if action == 'x':
                 add_order = False
+            elif action == 0:
+                drink = {}
+                drink_parts = create_drink(drink_parts_options)
+                if drink_parts:
+                    drink['parts'] = drink_parts
+                    drink_price = 0
+                    for i in range(len(drink_parts)):
+                        drink_price += drink_parts_prices[i][drink_parts[i]]
+                    drink['price'] = drink_price
+                    if drink:
+                        order['drinks'].append(drink)
+            elif action == 1:
+                print('Order:')
+                print(f'Name: {order['name']}')
+                for drink in order['drinks']:
+                    print(f'Drink: {', '.join(drink['parts'])}: ${drink['price']:.2f}')
+                total = 0
+                for drink in order['drinks']:
+                    total += drink['price']
+                print('\nPress enter to continue.')
+                input()
+                add_order = False
+# do chcekcout stuff money pirce
