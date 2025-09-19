@@ -1,14 +1,18 @@
+from os import system, name
 # Menu System
 # File logging with time and order status
 # Cancelled, success, etc.
 
-drinks = {'Taro': 4.49, 'Peach': 4.99, 'Brown Sugar': 2.99, 'Coffee': 3.99, 'Lychee': 4.49, 'White Tea': 3.49, 'Black Tea': 3.49, 'Coconut': 3.99, 'Guava': 4.99, 'Almond': 3.99, 'Caramel': 3.99}
+drinks = {'Taro': 4.49, 'Peach': 4.99, 'Brown Sugar': 2.99, 'Coffee': 3.99, 'Black Tea': 3.49, 'Coconut': 3.99, 'Caramel': 3.99}
 pearls = {'Brown Sugar': 1.99, 'Plain': 1.49, 'Strawbery': 2.49, 'Mango': 2.49, 'None': 0}
 extras = {'Grass Jelly': 0.99, 'Coffee Jelly': 0.99, 'Lychee Jelly': 1.49, 'Peach Jelly': 1.49, 'None': 0}
 sugar = {'1 Teaspoon': 0, '2 Teaspoons': 0, '3 Teaspoons': 0, '4 Teaspoons': 0}
 ice = {'No Ice': 0, 'Moderate Ice': 0, 'Extra Ice': 0}
 drink_parts_options = {'drink': list(drinks.keys()), 'pearls': list(pearls.keys()), 'extras': list(extras.keys()), 'sugar amount':list(sugar.keys()), 'ice amount': list(ice.keys())}
 drink_parts_prices = [drinks, pearls, extras, sugar, ice]
+
+def clear():
+    system('cls' if name == 'nt' else 'clear')
 
 def display_options(options):
     for i in range(len(options)):
@@ -32,9 +36,11 @@ def select_option(options):
 def create_drink(parts):
     drink = []
     for part in parts:
-        print(f'Select {part}')
+        print('Create Drink')
+        print('------------')
+        print(f'Select {part}:')
         option = select_option(parts[part])
-        print()
+        clear()
         if option == 'x':
             return False
         else:
@@ -49,7 +55,7 @@ while running:
     print('What would you like to do?')
     print('Enter x at anytime to cancel or exit.')
     action = select_option(['create new order'])
-    print()
+    clear()
     if action == 'x':
         running = False
     else:
@@ -62,8 +68,8 @@ while running:
         add_order = True
         while add_order:
             print('What would you like to do?')
-            action = select_option(['create new drink', 'finish order'])
-            print()
+            action = select_option(['add new drink', 'finish order'])
+            clear()
             if action == 'x':
                 add_order = False
             elif action == 0:
@@ -77,15 +83,24 @@ while running:
                     drink['price'] = drink_price
                     if drink:
                         order['drinks'].append(drink)
+                        print('Drink Added to Order:')
+                        print(f'{', '.join(drink['parts'])}: ${drink['price']:.2f}')
+                        print('Press enter to continue.')
+                        input()
+                        clear()
             elif action == 1:
-                print('Order:')
+                print('Order')
+                print('-----')
                 print(f'Name: {order['name']}')
+                print('Drinks:')
                 for drink in order['drinks']:
-                    print(f'Drink: {', '.join(drink['parts'])}: ${drink['price']:.2f}')
+                    print(f'- {', '.join(drink['parts'])}: ${drink['price']:.2f}')
                 total = 0
                 for drink in order['drinks']:
                     total += drink['price']
+                print(f'Total: ${total:.2f}')
                 print('\nPress enter to continue.')
                 input()
+                clear()
                 add_order = False
 # do chcekcout stuff money pirce
