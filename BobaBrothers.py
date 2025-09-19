@@ -19,7 +19,6 @@ def display_options(options):
         print(f'{i + 1}. {options[i]}')
 
 def select_option(options):
-    # global loop variable shenanigans later
     display_options(options)
     valid = False
     valid_options = [str(i) for i in range(1, len(options) + 1)]
@@ -99,8 +98,8 @@ while running:
                 for drink in order['drinks']:
                     total += drink['price']
                 print(f'Total: ${total:.2f}')
-                print('\nPress enter to continue.')
-                input()
+                action = select_option(['transaction approved', 'transaction failed/cancelled'])
+                if action == 0:
+                    print('recepit, log, stuff')
                 clear()
                 add_order = False
-# do chcekcout stuff money pirce
