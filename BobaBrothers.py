@@ -2,10 +2,6 @@ from os import system, name
 from datetime import datetime
 from pytz import timezone
 
-# Menu System
-# File logging with time and order status
-# Cancelled, success, etc.
-
 drinks = {'Taro': 4.49, 'Peach': 4.99, 'Brown Sugar': 2.99, 'Coffee': 3.99, 'Black Tea': 3.49, 'Coconut': 3.99, 'Caramel': 3.99}
 pearls = {'Brown Sugar': 1.99, 'Plain': 1.49, 'Strawbery': 2.49, 'Mango': 2.49, 'None': 0}
 extras = {'Grass Jelly': 0.99, 'Coffee Jelly': 0.99, 'Lychee Jelly': 1.49, 'Peach Jelly': 1.49, 'None': 0}
@@ -21,16 +17,23 @@ def display_options(options):
     for i in range(len(options)):
         print(f'{i + 1}. {options[i]}')
 
-def select_option(options):
+def wait():
+    print('Press enter to continue.')
+    input()
+    clear()
+
+def select_option(prompt, options):
     valid = False
     valid_options = [str(i) for i in range(1, len(options) + 1)]
     while not valid:
+        print(prompt)
         display_options(options)
         choice = input()
         if choice == 'x':
             return choice
         elif choice not in valid_options:
-            print('Invalid option\n')
+            print('Invalid option.')
+            wait()
         else:
             valid = True
             return int(choice) - 1
@@ -38,10 +41,7 @@ def select_option(options):
 def create_drink(parts):
     drink = []
     for part in parts:
-        print('Create Drink')
-        print('------------')
-        print(f'Select {part}:')
-        option = select_option(parts[part])
+        option = select_option(f'Create Drink\n------------\nSelect {part}:', parts[part])
         clear()
         if option == 'x':
             return False
@@ -50,14 +50,11 @@ def create_drink(parts):
             drink.append(option)
     return drink
 
+
 clear()
 running = True
 while running:
-    print('Main Screen')
-    print('-----------')
-    print('What would you like to do?')
-    print('Enter x at anytime to cancel or exit.')
-    action = select_option(['create new order'])
+    action = select_option('Main Screen\n-----------\nWhat would you like to do?\nEnter x at anytime to cancel or exit.', ['create new order'])
     clear()
     if action == 'x':
         running = False
@@ -70,10 +67,7 @@ while running:
         clear()
         add_order = True
         while add_order:
-            print('Order Screen')
-            print('------------')
-            print('What would you like to do?')
-            action = select_option(['add new drink', 'finish order'])
+            action = select_option('Order Screen\n------------\nWhat would you like to do?', ['add new drink', 'finish order'])
             clear()
             if action == 'x':
                 add_order = False
@@ -92,24 +86,18 @@ while running:
                         print('------------')
                         print('Drink Added to Order:')
                         print(f'{', '.join(drink['parts'])}: ${drink['price']:.2f}')
-                        print('Press enter to continue.')
-                        input()
-                        clear()
+                        wait()
             elif action == 1:
-                print('Order')
-                print('-----')
-                print(f'Name: {order['name']}')
-                print('Drinks:')
-                for drink in order['drinks']:
-                    print(f'- {', '.join(drink['parts'])}: ${drink['price']:.2f}')
                 total = 0
                 for drink in order['drinks']:
                     total += drink['price']
-                print(f'Total: ${total:.2f}')
-                action = select_option(['transaction approved', 'transaction failed/cancelled'])
+                order_print = f'Order\n-----\nName: {order['name']}\nDrinks:\n{'\n'.join([f'- {', '.join(drink['parts'])}: ${drink['price']:.2f}' for drink in order['drinks']])}\nTotal: ${total:.2f}'
+                action = select_option(order_print, ['transaction approved', 'transaction failed/cancelled'])
                 if action == 0:
-                    print('recepit, log, stuff')
+                    print('(placeholder) recepit, log, stuff')
+                    wait()
                 else:
-                    print('order cancelled')
+                    print('(placeholder) order cancelled')
+                    wait()
                 clear()
                 add_order = False
