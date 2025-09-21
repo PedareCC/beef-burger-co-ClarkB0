@@ -1,3 +1,10 @@
 // Order Log
 // Successfully completed orders go here
 
+2025-09-21 17:22:20
+Name: Test
+Drinks:
+- Taro, Brown Sugar, Grass Jelly, 1 Teaspoon, No Ice: $7.47
+- Peach, Plain, Coffee Jelly, 2 Teaspoons, Moderate Ice: $7.47
+Total: $14.94
+
