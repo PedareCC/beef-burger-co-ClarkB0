@@ -10,6 +10,9 @@ ice = {'No Ice': 0, 'Moderate Ice': 0, 'Extra Ice': 0}
 drink_parts_options = {'drink': list(drinks.keys()), 'pearls': list(pearls.keys()), 'extras': list(extras.keys()), 'sugar amount':list(sugar.keys()), 'ice amount': list(ice.keys())}
 drink_parts_prices = [drinks, pearls, extras, sugar, ice]
 
+date_format = '%Y-%m-%d %H:%M:%S'
+local_timezone = timezone('Australia/Adelaide')
+
 def clear():
     system('cls' if name == 'nt' else 'clear')
 
@@ -91,9 +94,12 @@ while running:
                 total = 0
                 for drink in order['drinks']:
                     total += drink['price']
-                order_print = f'Order\n-----\nName: {order['name']}\nDrinks:\n{'\n'.join([f'- {', '.join(drink['parts'])}: ${drink['price']:.2f}' for drink in order['drinks']])}\nTotal: ${total:.2f}'
-                action = select_option(order_print, ['transaction approved', 'transaction failed/cancelled'])
+                order_print = f'Name: {order['name']}\nDrinks:\n{'\n'.join([f'- {', '.join(drink['parts'])}: ${drink['price']:.2f}' for drink in order['drinks']])}\nTotal: ${total:.2f}'
+                action = select_option(f'Order\n-----\n{order_print}\n', ['transaction approved', 'transaction failed/cancelled'])
                 if action == 0:
+                    local_datetime = datetime.now().astimezone(local_timezone).strftime(date_format)
+                    with open('OrderLog.txt', 'a') as file:
+                        file.write(f'{local_datetime}\n{order_print}\n\n')
                     print('(placeholder) recepit, log, stuff')
                     wait()
                 else:
