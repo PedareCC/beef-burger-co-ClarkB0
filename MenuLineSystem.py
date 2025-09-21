@@ -1,5 +1,6 @@
 from os import system, name
 from datetime import datetime
+# pytz may have to installed through pip
 from pytz import timezone
 
 # Drinks and prices can be freely added and edited
@@ -20,7 +21,7 @@ def clear():
     system('cls' if name == 'nt' else 'clear')
 
 def underline(string):
-    return f'{string}\n{''.join(['-' for _ in range(len(string))])}'
+    return f'{string}\n{'-' * len(string)}'
 
 def display_options(options):
     for i in range(len(options)):
