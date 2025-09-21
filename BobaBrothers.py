@@ -1,4 +1,7 @@
 from os import system, name
+from datetime import datetime
+from pytz import timezone
+
 # Menu System
 # File logging with time and order status
 # Cancelled, success, etc.
@@ -19,10 +22,10 @@ def display_options(options):
         print(f'{i + 1}. {options[i]}')
 
 def select_option(options):
-    display_options(options)
     valid = False
     valid_options = [str(i) for i in range(1, len(options) + 1)]
     while not valid:
+        display_options(options)
         choice = input()
         if choice == 'x':
             return choice
@@ -47,6 +50,7 @@ def create_drink(parts):
             drink.append(option)
     return drink
 
+clear()
 running = True
 while running:
     print('Main Screen')
@@ -60,12 +64,14 @@ while running:
     else:
         print('Order Screen')
         print('------------')
-        order = {'drinks': []}
         print('Enter customer name: ')
+        order = {'drinks': []}
         order['name'] = input()
-        print()
+        clear()
         add_order = True
         while add_order:
+            print('Order Screen')
+            print('------------')
             print('What would you like to do?')
             action = select_option(['add new drink', 'finish order'])
             clear()
@@ -82,6 +88,8 @@ while running:
                     drink['price'] = drink_price
                     if drink:
                         order['drinks'].append(drink)
+                        print('Create Drink')
+                        print('------------')
                         print('Drink Added to Order:')
                         print(f'{', '.join(drink['parts'])}: ${drink['price']:.2f}')
                         print('Press enter to continue.')
@@ -101,5 +109,7 @@ while running:
                 action = select_option(['transaction approved', 'transaction failed/cancelled'])
                 if action == 0:
                     print('recepit, log, stuff')
+                else:
+                    print('order cancelled')
                 clear()
                 add_order = False
