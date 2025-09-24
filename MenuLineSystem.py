@@ -4,11 +4,11 @@ from datetime import datetime
 from pytz import timezone
 
 # Drinks and prices can be freely added and edited
-drinks = {'Taro': 4.49, 'Peach': 4.99, 'Brown Sugar': 2.99, 'Coffee': 3.99, 'Black Tea': 3.49, 'Coconut': 3.99, 'Caramel': 3.99}
-pearls = {'Brown Sugar': 1.99, 'Plain': 1.49, 'Strawbery': 2.49, 'Mango': 2.49, 'None': 0}
-extras = {'Grass Jelly': 0.99, 'Coffee Jelly': 0.99, 'Lychee Jelly': 1.49, 'Peach Jelly': 1.49, 'None': 0}
-sugar = {'1 Teaspoon': 0, '2 Teaspoons': 0, '3 Teaspoons': 0, '4 Teaspoons': 0}
-ice = {'No Ice': 0, 'Moderate Ice': 0, 'Extra Ice': 0}
+drinks = {'taro': 4.49, 'peach': 4.99, 'brown sugar': 2.99, 'coffee': 3.99, 'black tea': 3.49, 'coconut': 3.99, 'caramel': 3.99}
+pearls = {'brown sugar': 1.99, 'plain': 1.49, 'strawbery': 2.49, 'mango': 2.49, 'none': 0}
+extras = {'grass jelly': 0.99, 'coffee jelly': 0.99, 'lychee jelly': 1.49, 'peach Jelly': 1.49, 'none': 0}
+sugar = {'1 teaspoon': 0, '2 teaspoons': 0, '3 teaspoons': 0, '4 teaspoons': 0}
+ice = {'no ice': 0, 'moderate ice': 0, 'extra ice': 0}
 # Other options can also be added
 drink_parts_options = {'drink': list(drinks.keys()), 'pearls': list(pearls.keys()), 'extras': list(extras.keys()), 'sugar amount':list(sugar.keys()), 'ice amount': list(ice.keys())}
 drink_parts_prices = [drinks, pearls, extras, sugar, ice]
