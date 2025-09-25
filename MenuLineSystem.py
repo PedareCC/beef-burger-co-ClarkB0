@@ -115,7 +115,7 @@ while running:
                         clear()
                         print(underline('Order'))
                         print('Error writing to file.')
-                        wait
+                        wait()
                 else:
                     clear()
                     print(underline('Order'))
